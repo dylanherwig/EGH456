@@ -3,7 +3,7 @@
 // hello.c - Simple hello world example.
 //
 // Copyright (c) 2013-2017 Texas Instruments Incorporated.  All rights reserved.
-// Software License Agreement
+// Software License Agreement testing CCS git implementaiton
 // 
 // Texas Instruments (TI) is supplying this software for use solely and
 // exclusively on TI's microcontroller products. The software is owned by
