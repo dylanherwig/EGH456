@@ -34,6 +34,7 @@
 #include "driverlib/sysctl.h"
 #include "driverlib/uart.h"
 #include "utils/uartstdio.h"
+#include "drivers/MotorLib/motorlib.h"
 
 //*****************************************************************************
 //
@@ -46,7 +47,7 @@
 //! Open a terminal with 115,200 8-N-1 to see the output for this demo.
 //
 //*****************************************************************************
-/GUID branch
+//GUID branch
 //*****************************************************************************
 //
 // System clock rate in Hz.
@@ -99,7 +100,7 @@ ConfigureUART(void)
 
 //*****************************************************************************
 //
-// Print "Hello World!" to the UART on the Intelligent UART Module.
+// Main
 //
 //*****************************************************************************
 int
