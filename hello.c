@@ -38,14 +38,12 @@
 
 //*****************************************************************************
 //
-//! \addtogroup example_list
-//! <h1>Hello World (hello)</h1>
-//!
-//! A very simple ``hello world'' example.  It simply displays ``Hello World!''
-//! on the UART and is a starting point for more complicated applications.
-//!
-//! Open a terminal with 115,200 8-N-1 to see the output for this demo.
+// Global Defines
 //
+//*****************************************************************************
+#define CRASH_ACCELERATION //test this figure?
+#define CRASH_DISTANCE //what is this figure?
+
 //*****************************************************************************
 //GUID branch
 //*****************************************************************************
@@ -97,6 +95,59 @@ ConfigureUART(void)
     //
     UARTStdioConfig(0, 115200, g_ui32SysClock);
 }
+//*****************************************************************************
+//
+// Motor Control
+//
+//*****************************************************************************
+#define MOTOR_ACCELERATION_RPMs = 750 //Note that this is measured in RPM per Second
+#define MOTOR_ESTOP_RPMs = 1000 //Note that this is measured in RPM per Second
+#define MOTOR_CURR_MAX //we need to decide what this is
+#define MOTOR_TEMP_MAX //we need to decide what this is
+//
+// E-Stop Thread / Interupt
+//
+void motor_eStop()
+{
+    // This Needs to check the following:
+    // 1. Check Current isn't above MOTOR_CURR_MAX
+    // 2. Motor isn't above MOTOR_TEMP_MAX
+    // 3. get message from acceleration sensor, and check that the acceleration isn't above CRASH_ACCELERATION
+    // 4. get message from distance sensor, and check that there isn't an object within CRASH_DISTANCE
+    //
+    // If any of those are true, it needs to call void stopMotor(bool brakeType);
+
+
+}
+
+//
+// Motor Set RPM - Will likely be called by an interupt from the UI
+//
+void motor_SetRPM(int rpm)
+{
+    //This needs to:
+    // Set motor RPM using void setDuty(uint16_t duty);
+    // Will likely need to be setup in a closed loop with motor_GetRPM()
+    // Will likely need to call motor_accelerate() & motor_decelerate
+}
+
+//
+// Motor Get RPM
+//
+int motor_GetRPM()
+{
+    //This needs to:
+    // Get motor RPM using void updateMotor(bool Hall_a, bool Hall_b, bool Hall_c);
+}
+
+//
+// Accelerate the Motor
+//
+void motor_accelerate(bool direction)
+{
+    // Accelerate the motor at MOTOR_ACCELERATION_RPMs
+    //  use the direction to establish if its acceleration or deceleration?
+}
 
 //*****************************************************************************
 //
@@ -127,6 +178,13 @@ main(void)
     // Initialize the UART.
     //
     ConfigureUART();
+
+    //
+    // Init Motor
+    //
+    Error_Block motorError;
+    uint16_t pwm_period = getMotorPWMPeriod();
+    initMotorLib(pwm_period, motorError);
 
     //
     // Hello!
